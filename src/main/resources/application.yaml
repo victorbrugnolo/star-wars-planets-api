@@ -1,0 +1,8 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://172.17.0.3:3306/star-wars-planets
+    username: root
+    password: docker
