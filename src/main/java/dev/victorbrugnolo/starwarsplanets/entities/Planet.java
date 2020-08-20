@@ -7,25 +7,29 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @ToString
 @EqualsAndHashCode
 @Table(name = "planet")
 public class Planet {
 
   @Id
-  @GeneratedValue(generator = "uuid2")
-  @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  @Column(columnDefinition = "BINARY(16)")
+  @Column
+  @Type(type = "uuid-char")
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
   private UUID id;
 
   @Column(nullable = false)
@@ -36,5 +40,8 @@ public class Planet {
 
   @Column(nullable = false)
   private String terrain;
+
+  @Column(nullable = false)
+  private Integer numberAppearances;
 
 }
