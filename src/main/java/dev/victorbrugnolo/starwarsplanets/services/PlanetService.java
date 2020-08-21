@@ -40,4 +40,8 @@ public class PlanetService {
         .requireNonNull(planetInSwApi.getBody()).getResults().get(0).getFilms().size()));
   }
 
+  public Page<PlanetResponse> getAllFromDatabase(Pageable pageable) {
+    return planetRepository.findAll(pageable).map(PlanetResponse::domainToResponse);
+  }
+
 }

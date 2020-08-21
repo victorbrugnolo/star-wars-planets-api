@@ -1,10 +1,14 @@
 package dev.victorbrugnolo.starwarsplanets.resources;
 
 import dev.victorbrugnolo.starwarsplanets.dtos.PlanetRequest;
+import dev.victorbrugnolo.starwarsplanets.dtos.PlanetResponse;
 import dev.victorbrugnolo.starwarsplanets.entities.Planet;
 import dev.victorbrugnolo.starwarsplanets.services.PlanetService;
 import java.net.URI;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +32,11 @@ public class PlanetResource {
         .fromCurrentRequest().path("/{id}").buildAndExpand(planet.getId())
         .toUri();
     return ResponseEntity.created(uri).build();
+  }
+
+  @GetMapping
+  public ResponseEntity<Page<PlanetResponse>> getAllFromDatabase(Pageable pageable) {
+    return ResponseEntity.ok(planetService.getAllFromDatabase(pageable));
   }
 
 }
