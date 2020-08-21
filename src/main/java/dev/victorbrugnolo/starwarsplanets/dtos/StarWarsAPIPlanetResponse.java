@@ -12,6 +12,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class StarWarsAPIPlanetResponse {
 
+  private String name;
+  private String climate;
+  private String terrain;
   private List<String> films;
 
 }

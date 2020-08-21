@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 public class StarWarsAPIResponse {
 
+  private Integer count;
+  private String next;
   private List<StarWarsAPIPlanetResponse> results;
 
 }

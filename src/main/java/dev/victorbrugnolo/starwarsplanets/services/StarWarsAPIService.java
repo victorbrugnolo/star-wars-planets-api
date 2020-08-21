@@ -24,4 +24,10 @@ public class StarWarsAPIService {
             StarWarsAPIResponse.class);
   }
 
+  public ResponseEntity<StarWarsAPIResponse> getAllPlanets(Integer page) {
+    return restTemplate
+        .getForEntity(String.format("%s/?page=%s", swApiUrl, page),
+            StarWarsAPIResponse.class);
+  }
+
 }

@@ -22,4 +22,12 @@ public class PlanetResponse {
         .terrain(domain.getTerrain()).numberAppearances(domain.getNumberAppearances()).build();
   }
 
+  public static PlanetResponse swApiPlanetToResponse(
+      StarWarsAPIPlanetResponse swApiPlanetResponse) {
+    return PlanetResponse.builder().name(swApiPlanetResponse.getName())
+        .climate(swApiPlanetResponse.getClimate())
+        .terrain(swApiPlanetResponse.getTerrain())
+        .numberAppearances(swApiPlanetResponse.getFilms().size()).build();
+  }
+
 }
