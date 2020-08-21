@@ -1,11 +1,15 @@
 package dev.victorbrugnolo.starwarsplanets.resources;
 
 import dev.victorbrugnolo.starwarsplanets.dtos.PlanetRequest;
+import dev.victorbrugnolo.starwarsplanets.entities.Planet;
 import dev.victorbrugnolo.starwarsplanets.services.PlanetService;
+import java.net.URI;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/planets")
@@ -18,8 +22,12 @@ public class PlanetResource {
   }
 
   @PostMapping
-  public void save(@RequestBody PlanetRequest planetRequest) {
-    planetService.save(planetRequest);
+  public ResponseEntity<Void> save(@RequestBody PlanetRequest planetRequest) {
+    Planet planet = planetService.save(planetRequest);
+    URI uri = ServletUriComponentsBuilder
+        .fromCurrentRequest().path("/{id}").buildAndExpand(planet.getId())
+        .toUri();
+    return ResponseEntity.created(uri).build();
   }
 
 }
