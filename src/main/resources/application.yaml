@@ -7,8 +7,6 @@ spring:
     url: jdbc:mysql://172.17.0.2:3306/star-wars-planets
     username: root
     password: docker
-    driver-class-name: com.mysql.jdbc.Driver
-
 
 swapi:
   url:
