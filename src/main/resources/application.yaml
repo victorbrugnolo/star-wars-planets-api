@@ -14,6 +14,10 @@ spring:
     username: root
     password: docker
 
+server:
+  servlet:
+    contextPath: /api
+
 swapi:
   url:
     base: https://swapi.dev/api
