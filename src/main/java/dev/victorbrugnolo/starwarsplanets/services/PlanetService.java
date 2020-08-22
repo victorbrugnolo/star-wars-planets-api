@@ -4,6 +4,7 @@ import dev.victorbrugnolo.starwarsplanets.dtos.PlanetRequest;
 import dev.victorbrugnolo.starwarsplanets.dtos.PlanetResponse;
 import dev.victorbrugnolo.starwarsplanets.dtos.StarWarsAPIResponse;
 import dev.victorbrugnolo.starwarsplanets.entities.Planet;
+import dev.victorbrugnolo.starwarsplanets.exceptions.InternalServerErrorException;
 import dev.victorbrugnolo.starwarsplanets.exceptions.NotFoundException;
 import dev.victorbrugnolo.starwarsplanets.repositories.PlanetRepository;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -71,9 +73,13 @@ public class PlanetService {
           PageRequest.of(pageToApiSearch, NUMBER_OF_ELEMENTS_PER_PAGE_SWAPI),
           totalPlanetsInApi);
     } catch (HttpClientErrorException ex) {
-      return new PageImpl<>(new ArrayList<>(),
-          PageRequest.of(pageToApiSearch, NUMBER_OF_ELEMENTS_PER_PAGE_SWAPI),
-          NUMBER_OF_ELEMENTS_TOTAL_FOR_EXCEPTION_SWAPI);
+      if (ex.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
+        return new PageImpl<>(new ArrayList<>(),
+            PageRequest.of(pageToApiSearch, NUMBER_OF_ELEMENTS_PER_PAGE_SWAPI),
+            NUMBER_OF_ELEMENTS_TOTAL_FOR_EXCEPTION_SWAPI);
+      }
+
+      throw new InternalServerErrorException(ex.getMessage());
     }
   }
 
