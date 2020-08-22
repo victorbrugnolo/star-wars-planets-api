@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -102,6 +103,10 @@ public class PlanetService {
 
   public PlanetResponse findById(String id) {
     return PlanetResponse.domainToResponse(getByIdFromDatabase(id));
+  }
+
+  public void delete(String id) {
+    planetRepository.delete(getByIdFromDatabase(id));
   }
 
   private Planet getByIdFromDatabase(String id) {
