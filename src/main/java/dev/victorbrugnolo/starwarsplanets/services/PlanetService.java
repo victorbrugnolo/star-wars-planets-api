@@ -11,6 +11,7 @@ import dev.victorbrugnolo.starwarsplanets.repositories.PlanetRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,6 +33,7 @@ public class PlanetService {
   private final static Integer NUMBER_OF_ELEMENTS_TOTAL_FOR_EXCEPTION_SWAPI = 60;
   private final static String ERR_MSG_PLANET_NOT_FOUND_BY_NAME = "Planet %s not found";
   private final static String ERR_MSG_PLANET_ALREADY_EXISTS = "Planet %s already exists";
+  private final static String ERR_MSG_PLANET_NOT_FOUND_BY_ID = "Planet id %s not found";
 
   public PlanetService(
       PlanetRepository planetRepository,
@@ -96,6 +98,19 @@ public class PlanetService {
         () -> new NotFoundException(String.format(ERR_MSG_PLANET_NOT_FOUND_BY_NAME, name)));
 
     return PlanetResponse.domainToResponse(found);
+  }
+
+  public PlanetResponse findById(String id) {
+    return PlanetResponse.domainToResponse(getByIdFromDatabase(id));
+  }
+
+  private Planet getByIdFromDatabase(String id) {
+    try {
+      return planetRepository.findById(UUID.fromString(id)).orElseThrow(
+          () -> new NotFoundException(String.format(ERR_MSG_PLANET_NOT_FOUND_BY_ID, id)));
+    } catch (IllegalArgumentException ex) {
+      throw new NotFoundException(String.format(ERR_MSG_PLANET_NOT_FOUND_BY_ID, id));
+    }
   }
 
 }

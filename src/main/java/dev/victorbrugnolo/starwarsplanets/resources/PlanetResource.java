@@ -52,4 +52,9 @@ public class PlanetResource {
     return ResponseEntity.ok(planetService.findByName(name));
   }
 
+  @GetMapping("{id}")
+  public ResponseEntity<PlanetResponse> findById(@PathVariable("id") String id) {
+    return ResponseEntity.ok(planetService.findById(id));
+  }
+
 }
