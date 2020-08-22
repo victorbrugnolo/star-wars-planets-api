@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 @Service
+@RequiredArgsConstructor
 public class PlanetService {
 
   private final PlanetRepository planetRepository;
@@ -35,13 +36,6 @@ public class PlanetService {
   private final static String ERR_MSG_PLANET_NOT_FOUND_BY_NAME = "Planet %s not found";
   private final static String ERR_MSG_PLANET_ALREADY_EXISTS = "Planet %s already exists";
   private final static String ERR_MSG_PLANET_NOT_FOUND_BY_ID = "Planet id %s not found";
-
-  public PlanetService(
-      PlanetRepository planetRepository,
-      StarWarsAPIService starWarsAPIService) {
-    this.planetRepository = planetRepository;
-    this.starWarsAPIService = starWarsAPIService;
-  }
 
   public Planet save(PlanetRequest planetRequest) {
     planetRepository.findByName(planetRequest.getName()).ifPresent(planet -> {
