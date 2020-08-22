@@ -3,6 +3,12 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: false
+        format_sql: true
+        type: trace
   datasource:
     url: jdbc:mysql://172.17.0.2:3306/star-wars-planets
     username: root
