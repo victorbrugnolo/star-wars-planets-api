@@ -1,20 +1,17 @@
 package dev.victorbrugnolo.starwarsplanets.exceptions;
 
 import java.util.Objects;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-  public static final String EXCEPTION_MSG_UNEXPECTED_ERROR = "Unexpected error";
   private static final String EXCEPTION_LOG_MSG = "e=%s,m=%s";
 
   @ExceptionHandler(APIException.class)
@@ -26,7 +23,8 @@ public class GlobalExceptionHandler {
   }
 
   private static void logE(final Exception e) {
-    final String message = String.format(EXCEPTION_LOG_MSG, e.getClass().getSimpleName(), e.getMessage());
+    final String message = String
+        .format(EXCEPTION_LOG_MSG, e.getClass().getSimpleName(), e.getMessage());
     log.error(message, e);
   }
 
