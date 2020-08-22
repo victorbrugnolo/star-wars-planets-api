@@ -18,6 +18,9 @@
   <properties>
     <java.version>11</java.version>
     <spring-cloud.version>Hoxton.SR7</spring-cloud.version>
+    <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
+    <junit-jupiter-engine.version>5.6.2</junit-jupiter-engine.version>
+    <mockito-junit-jupiter.version>3.5.2</mockito-junit-jupiter.version>
   </properties>
 
   <dependencies>
@@ -59,18 +62,20 @@
     <dependency>
       <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
-      <version>6.1.5.Final</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.6.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-junit-jupiter</artifactId>
-      <version>3.5.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
