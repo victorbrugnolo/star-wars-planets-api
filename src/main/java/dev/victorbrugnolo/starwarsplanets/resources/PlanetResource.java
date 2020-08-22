@@ -5,11 +5,11 @@ import dev.victorbrugnolo.starwarsplanets.dtos.PlanetResponse;
 import dev.victorbrugnolo.starwarsplanets.entities.Planet;
 import dev.victorbrugnolo.starwarsplanets.services.PlanetService;
 import java.net.URI;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +45,11 @@ public class PlanetResource {
   public ResponseEntity<Page<PlanetResponse>> getAllFromSwApi(
       @RequestParam(required = false) Integer page) {
     return ResponseEntity.ok(planetService.getAllFromSwApi(page));
+  }
+
+  @GetMapping(params = "name")
+  public ResponseEntity<PlanetResponse> findByName(@RequestParam("name") String name) {
+    return ResponseEntity.ok(planetService.findByName(name));
   }
 
 }

@@ -4,6 +4,7 @@ import dev.victorbrugnolo.starwarsplanets.dtos.PlanetRequest;
 import dev.victorbrugnolo.starwarsplanets.dtos.PlanetResponse;
 import dev.victorbrugnolo.starwarsplanets.dtos.StarWarsAPIResponse;
 import dev.victorbrugnolo.starwarsplanets.entities.Planet;
+import dev.victorbrugnolo.starwarsplanets.exceptions.ConflictException;
 import dev.victorbrugnolo.starwarsplanets.exceptions.InternalServerErrorException;
 import dev.victorbrugnolo.starwarsplanets.exceptions.NotFoundException;
 import dev.victorbrugnolo.starwarsplanets.repositories.PlanetRepository;
@@ -29,6 +30,8 @@ public class PlanetService {
   private final static String ERR_MSG_PLANET_NOT_FOUND_SWAPI = "Planet %s not found in SWAPI";
   private final static Integer NUMBER_OF_ELEMENTS_PER_PAGE_SWAPI = 10;
   private final static Integer NUMBER_OF_ELEMENTS_TOTAL_FOR_EXCEPTION_SWAPI = 60;
+  private final static String ERR_MSG_PLANET_NOT_FOUND_BY_NAME = "Planet %s not found";
+  private final static String ERR_MSG_PLANET_ALREADY_EXISTS = "Planet %s already exists";
 
   public PlanetService(
       PlanetRepository planetRepository,
@@ -38,6 +41,11 @@ public class PlanetService {
   }
 
   public Planet save(PlanetRequest planetRequest) {
+    planetRepository.findByName(planetRequest.getName()).ifPresent(planet -> {
+      throw new ConflictException(
+          String.format(ERR_MSG_PLANET_ALREADY_EXISTS, planetRequest.getName()));
+    });
+
     ResponseEntity<StarWarsAPIResponse> planetInSwApi = starWarsAPIService
         .getPlanetByName(planetRequest.getName());
 
@@ -81,6 +89,13 @@ public class PlanetService {
 
       throw new InternalServerErrorException(ex.getMessage());
     }
+  }
+
+  public PlanetResponse findByName(String name) {
+    Planet found = planetRepository.findByName(name).orElseThrow(
+        () -> new NotFoundException(String.format(ERR_MSG_PLANET_NOT_FOUND_BY_NAME, name)));
+
+    return PlanetResponse.domainToResponse(found);
   }
 
 }
