@@ -1,5 +1,6 @@
 package dev.victorbrugnolo.starwarsplanets.exceptions;
 
+import dev.victorbrugnolo.starwarsplanets.dtos.ErrorMessage;
 import lombok.Getter;
 
 @Getter

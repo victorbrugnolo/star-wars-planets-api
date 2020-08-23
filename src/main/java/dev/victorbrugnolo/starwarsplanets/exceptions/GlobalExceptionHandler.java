@@ -1,5 +1,6 @@
 package dev.victorbrugnolo.starwarsplanets.exceptions;
 
+import dev.victorbrugnolo.starwarsplanets.dtos.ErrorMessage;
 import java.util.Locale;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;

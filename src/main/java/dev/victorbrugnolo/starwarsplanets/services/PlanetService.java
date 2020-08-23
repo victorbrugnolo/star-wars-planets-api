@@ -1,5 +1,6 @@
 package dev.victorbrugnolo.starwarsplanets.services;
 
+import dev.victorbrugnolo.starwarsplanets.dtos.ErrorMessage;
 import dev.victorbrugnolo.starwarsplanets.dtos.PlanetRequest;
 import dev.victorbrugnolo.starwarsplanets.dtos.PlanetResponse;
 import dev.victorbrugnolo.starwarsplanets.dtos.StarWarsAPIResponse;
@@ -40,7 +41,9 @@ public class PlanetService {
   public Planet save(PlanetRequest planetRequest) {
     planetRepository.findByName(planetRequest.getName()).ifPresent(planet -> {
       throw new ConflictException(
-          String.format(ERR_MSG_PLANET_ALREADY_EXISTS, planetRequest.getName()));
+          ErrorMessage.builder()
+              .message(String.format(ERR_MSG_PLANET_ALREADY_EXISTS, planetRequest.getName()))
+              .build());
     });
 
     ResponseEntity<StarWarsAPIResponse> planetInSwApi = starWarsAPIService
@@ -48,7 +51,9 @@ public class PlanetService {
 
     if (Objects.isNull(planetInSwApi.getBody()) || planetInSwApi.getBody().getResults().isEmpty()) {
       throw new NotFoundException(
-          String.format(ERR_MSG_PLANET_NOT_FOUND_SWAPI, planetRequest.getName()));
+          ErrorMessage.builder()
+              .message(String.format(ERR_MSG_PLANET_NOT_FOUND_SWAPI, planetRequest.getName()))
+              .build());
     }
 
     return planetRepository.save(PlanetRequest.toDomain(planetRequest, Objects
@@ -90,7 +95,10 @@ public class PlanetService {
 
   public PlanetResponse findByName(String name) {
     Planet found = planetRepository.findByName(name).orElseThrow(
-        () -> new NotFoundException(String.format(ERR_MSG_PLANET_NOT_FOUND_BY_NAME, name)));
+        () -> new NotFoundException(
+            ErrorMessage.builder()
+                .message(String.format(ERR_MSG_PLANET_NOT_FOUND_BY_NAME, name))
+                .build()));
 
     return PlanetResponse.domainToResponse(found);
   }
@@ -106,9 +114,15 @@ public class PlanetService {
   private Planet getByIdFromDatabase(String id) {
     try {
       return planetRepository.findById(UUID.fromString(id)).orElseThrow(
-          () -> new NotFoundException(String.format(ERR_MSG_PLANET_NOT_FOUND_BY_ID, id)));
+          () -> new NotFoundException(
+              ErrorMessage.builder()
+                  .message(String.format(ERR_MSG_PLANET_NOT_FOUND_BY_ID, id))
+                  .build()));
     } catch (IllegalArgumentException ex) {
-      throw new NotFoundException(String.format(ERR_MSG_PLANET_NOT_FOUND_BY_ID, id));
+      throw new NotFoundException(
+          ErrorMessage.builder()
+              .message(String.format(ERR_MSG_PLANET_NOT_FOUND_BY_ID, id))
+              .build());
     }
   }
 

@@ -1,5 +1,6 @@
 package dev.victorbrugnolo.starwarsplanets.exceptions;
 
+import dev.victorbrugnolo.starwarsplanets.dtos.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

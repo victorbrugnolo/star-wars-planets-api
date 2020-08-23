@@ -1,4 +1,4 @@
-package dev.victorbrugnolo.starwarsplanets.exceptions;
+package dev.victorbrugnolo.starwarsplanets.dtos;
 
 import java.io.Serializable;
 import java.util.ArrayList;

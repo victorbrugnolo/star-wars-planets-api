@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import dev.victorbrugnolo.starwarsplanets.StarWarsPlanetsApplication;
 import dev.victorbrugnolo.starwarsplanets.dtos.PlanetRequest;
-import dev.victorbrugnolo.starwarsplanets.exceptions.ErrorMessage;
+import dev.victorbrugnolo.starwarsplanets.dtos.ErrorMessage;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
