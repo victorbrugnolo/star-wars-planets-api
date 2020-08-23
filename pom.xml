@@ -11,7 +11,7 @@
   </parent>
   <groupId>dev.victorbrugnolo</groupId>
   <artifactId>star-wars-planets</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <name>star-wars-planets</name>
   <description>Star Wars Planets API</description>
 

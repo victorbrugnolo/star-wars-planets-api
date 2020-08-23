@@ -1,0 +1,28 @@
+version: "3.3"
+services:
+  mariadb:
+    restart: always
+    image: mariadb:10.5.5-focal
+    container_name: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=docker
+      - MYSQL_DATABASE=star-wars-planets
+    ports:
+      - "3306:3306"
+    networks:
+      - star-wars-planets-network
+  api:
+    build:
+      .
+    ports:
+      - "8080:8080"
+    container_name: star-wars-planets-api
+    depends_on:
+      - mariadb
+    links:
+      - mariadb
+    networks:
+      - star-wars-planets-network
+networks:
+    star-wars-planets-network:
+        driver: bridge
