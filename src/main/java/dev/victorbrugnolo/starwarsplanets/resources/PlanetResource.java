@@ -5,6 +5,7 @@ import dev.victorbrugnolo.starwarsplanets.dtos.PlanetResponse;
 import dev.victorbrugnolo.starwarsplanets.entities.Planet;
 import dev.victorbrugnolo.starwarsplanets.services.PlanetService;
 import java.net.URI;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +28,7 @@ public class PlanetResource {
   private final PlanetService planetService;
 
   @PostMapping
-  public ResponseEntity<Void> save(@RequestBody PlanetRequest planetRequest) {
+  public ResponseEntity<Void> save(@Valid @RequestBody PlanetRequest planetRequest) {
     Planet planet = planetService.save(planetRequest);
     URI uri = ServletUriComponentsBuilder
         .fromCurrentRequest().path("/{id}").buildAndExpand(planet.getId())

@@ -1,7 +1,8 @@
 package dev.victorbrugnolo.starwarsplanets.dtos;
 
-import com.sun.istack.NotNull;
 import dev.victorbrugnolo.starwarsplanets.entities.Planet;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,12 +15,15 @@ import lombok.NoArgsConstructor;
 public class PlanetRequest {
 
   @NotNull
+  @NotEmpty
   private String name;
 
   @NotNull
+  @NotEmpty
   private String climate;
 
   @NotNull
+  @NotEmpty
   private String terrain;
 
   public static Planet toDomain(PlanetRequest planetRequest, Integer numberAppearances) {
