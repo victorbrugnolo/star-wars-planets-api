@@ -4,6 +4,14 @@ RUN mkdir -p /opt/app
 
 ENV PROJECT_HOME /opt/app
 
+COPY pom.xml /build/
+
+COPY src /build/src/
+
+WORKDIR /build/
+
+RUN mvn package
+
 COPY target/star-wars-planets-0.0.1.jar $PROJECT_HOME/star-wars-planets.jar
 
 WORKDIR $PROJECT_HOME
